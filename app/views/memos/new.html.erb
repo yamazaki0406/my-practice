@@ -1,14 +1,90 @@
 <div id="app">
-  <p>{{ message }}</p>
-</div>
+  <p　v-once :class="[color, {'bg-blue': isActive}]">{{ message }}</p>
+  <p :class="classObject">{{ sayHi() }}</p>
+  <button @click="isActive = !isActive">切り替え</button>
+  <div v-html="html"></div><a v-bind:href="url">Google</a><a :href="url">Google</a><a :[attribute]="url">Google</a><a v-bind="twitterObject">Twitter</a>
 
-<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+  <p>現在{{countData}}回クリックされています。</p>
+  <button v-on:[event]="countUp(2)">カウントアップ</button>
+
+  <p @mousemove="changeMousePosition(-1, $event)">マウスを載せてください<span v-on:mousemove.stop>反応しないでください</span></p>
+  <p>X:{{x}}, Y:{{y}}</p>
+
+  <input type="text" v-on:keyup.enter="myAlert"><br>
+  <p>{{ text }}</p>
+  <input type="text" v-model="text">
+
+  <p>{{ lessThanThree }}</p>
+  <p>{{ lessThanThreeMethods() }}</p>
+
+  <p>残り{{ example }}文字入力</p>
+  <p><input type="text" v-model="textCount"></p>
+</div>
 
 <script>
   new Vue({
     el: "#app",
     data:{
-      message: "Hello World!"
+      isActive: true,
+      color: "red",
+      bg: "bg-blue",
+      textCount:"",
+      message: "Hello World!!!!oooi",
+      html: "<h1>html</h1>",
+      url: "https://google.com",
+      number: 31,
+      x:0,
+      y:0,
+      attribute: "href",
+      event: "click",
+      twitterObject:{
+        href: "https://twitter.com",
+        id: 31
+      },
+      countData: 0,
+      text:"This is v-model",
+    },
+    computed:{
+      lessThanThree: function(){
+        return this.countData > 3 ? "3よりも大きい数字" : "３よりも小さい数"
+      },
+      example: function(){
+        return 50 - this.textCount.length;
+      },
+      classObject: function(){
+        return {
+          red: this.isActive,
+          'bg-blue': !this.isActive}
+      }
+    },
+    watch:{
+      countData: function(){
+        var vm = this;
+        setTimeout(function(){
+          vm.countData = 0
+        }, 1000 )
+      }
+    },
+    methods:{
+      sayHi(){
+        this.message = "Hello Vue.js"
+        return "Hi"
+      },
+      countUp(times){
+        this.countData += 1 * times
+      },
+      changeMousePosition(multiplier, event){
+        this.x = event.clientX * multiplier;
+        this.y = event.clientY * multiplier;
+      },
+      myAlert(){
+        alert("アラート");
+      },
+      lessThanThreeMethods: function(){
+                return this.countData > 3 ? "3よりも大きい数字" : "３よりも小さい数"
+      }
     }
   })
+
+
 </script>

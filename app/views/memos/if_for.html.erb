@@ -1,0 +1,56 @@
+<div id="app">
+  <p v-if="ok">OK!</p>
+  <p v-else-if="maybeOk">Maybe Ok</p>
+  <p v-else>Not OK...</p><br>
+
+  <p v-if="Good">v-if is Good!</p>
+  <p v-show="Good">v-show is Good!</p>
+  <button type="button" @click="Good = !Good">ボタン</button>
+  <ul>
+    <li v-for="(fruit, index) in fruits">{{ index }}個目は{{ fruit }}</li>
+  </ul>
+  <ul>
+    <li v-for="(value, key, index) in object">{{ index }}{{ key }}:{{ value }}</li>
+  </ul>
+  <template v-for="(fruit, key) in fruits">
+    <li>{{ fruit }}</li>
+    <li>{{ key }}</li>
+    <hr>
+  </template>
+  <br>
+  <ul>
+    <li v-for="n in 3">{{n * 2}}</li>
+    <li v-for="n of 3">{{n * 3}}</li>
+  </ul>
+
+  <ul>
+    <div v-for="car in cars" :key="car">
+      <p>{{ car }}</p>
+      <input type="text">
+    </div>
+  </ul>
+  <button @click="remove">先頭を削除</button>
+</div>
+
+<script>
+  new Vue({
+    el: "#app",
+    data:{
+      ok:false,
+      maybeOk:false,
+      Good:true,
+      fruits:["リンゴ", "バナナ", "ぶどう"],
+      cars:["パトカー", "救急車", "消防車"],
+      object:{
+        firstName: "太郎",
+        lastName:"田中",
+        age:21
+      }
+    },
+    methods:{
+      remove: function(){
+        this.cars.shift()
+      }
+    }
+  })
+</script>

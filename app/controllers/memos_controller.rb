@@ -1,6 +1,8 @@
 class MemosController < ApplicationController
   before_action :set_memo, only: [:show, :edit, :update, :destroy]
 
+  def if_for
+  end
   # GET /memos
   # GET /memos.json
   def index
